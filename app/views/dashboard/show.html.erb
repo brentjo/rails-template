@@ -1,0 +1,10 @@
+<div>
+  <% if logged_in? %>
+    <p>Hello, <%= current_user.email %>.</p>
+    <%= form_tag '/logout', :method => "post" do %>
+      <%= submit_tag "Logout" %>
+    <% end %>
+  <% else %>
+    <p><%= link_to "Login", login_path %> or <%= link_to "Register", register_path %>.<p>
+  <% end %>
+</div>
