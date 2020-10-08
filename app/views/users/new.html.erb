@@ -1,0 +1,12 @@
+<div>
+  <%= form_tag '/users', :method => "post" do %>
+    <h2>Sign up</h2>
+    <%= label_tag(:user_email, "Email:") %>
+    <%= email_field(:user, :email) %>
+    <%= label_tag(:user_password, "Password:") %>
+    <%= password_field(:user, :password) %>
+    <%= label_tag(:user_password_confirmation, "Confirm password:") %>
+    <%= password_field(:user, :password_confirmation) %>
+    <%= submit_tag "Submit" %>
+  <% end %>
+</div>
