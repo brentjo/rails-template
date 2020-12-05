@@ -44,7 +44,7 @@ end
   - The script-src directive is set to `'self'` because it assumes you'll be serving assets from your application and not a CDN. Security-wise, it would be preferred to serve assets from a CDN you fully control, and set it in the script-src directive and remove `'self'`. This way your application (which can serve all sorts of dynamic content) is not allowed as a script source, and cannot be leveraged to execute javascript in the event of a content injection vulnerability. It has the added benefit of protecting against unsafe patterns like [JSONP](https://stackoverflow.com/questions/2067472/what-is-jsonp-and-why-was-it-created) being introduced in your application.
 
 **Bcrypt password hashing**
-* Uses Active Model's has_secure_password decorator to use Bcrypt password hashing on `User` passwords.
+* Uses Active Model's [`has_secure_password`](https://github.com/brentjo/rails-template/blob/7c280dbb6d6787d0455788f152af7d032445918d/app/models/user.rb#L2) decorator to use Bcrypt password hashing on `User` passwords.
 * Uses the default cost parameter of 12.
 
 **User sessions with Active Record Session Store**
