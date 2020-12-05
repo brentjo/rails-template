@@ -4,7 +4,7 @@ A fresh Rails application from `rails new` containing common changes I tend to m
 
 **Security headers**
 
-Applies a strong default set of security headers using the [secure_headers](https://github.com/github/secure_headers) gem.
+Applies a default set of security headers using the [secure_headers](https://github.com/github/secure_headers) gem.
 
 ```ruby
 # config/initializers/secure_headers.rb
