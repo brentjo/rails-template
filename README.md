@@ -1,10 +1,10 @@
 # Rails template
 
-A fresh Rails application from `rails new` containing common changes I tend to make on new projects.
+A barebones Rails application from `rails new` containing common security-related changes I tend to make on new projects. It's intended to serve as inspiration for changes you could look to incorporate into a new Rails app rather than template code to build on verbatim.
 
 **Security headers**
 
-Applies a default set of security headers using the [secure_headers](https://github.com/github/secure_headers) gem.
+- Applies a default set of security headers using the [secure_headers](https://github.com/github/secure_headers) gem.
 
 ```ruby
 # config/initializers/secure_headers.rb
@@ -44,11 +44,13 @@ end
   - The script-src directive is set to `'self'` because it assumes you'll be serving assets from your application and not a CDN. Security-wise, it would be preferred to serve assets from a CDN you fully control, and set it in the script-src directive and remove `'self'`. This way your application (which can serve all sorts of dynamic content) is not allowed as a script source, and cannot be leveraged to execute javascript in the event of a content injection vulnerability. It has the added benefit of protecting against unsafe patterns like [JSONP](https://stackoverflow.com/questions/2067472/what-is-jsonp-and-why-was-it-created) being introduced in your application.
 
 **Bcrypt password hashing**
-* Uses Active Model's [`has_secure_password`](https://github.com/brentjo/rails-template/blob/7c280dbb6d6787d0455788f152af7d032445918d/app/models/user.rb#L2) decorator to use Bcrypt password hashing on `User` passwords.
-* Uses the default cost parameter of 12.
+* Has a `User` model that uses Active Model's [`has_secure_password`](https://github.com/brentjo/rails-template/blob/7c280dbb6d6787d0455788f152af7d032445918d/app/models/user.rb#L2) decorator to use Bcrypt password hashing on passwords.
+  * Uses the default cost parameter of 12.
 
 **User sessions with Active Record Session Store**
 * Server-sided session storage using [Active Record Session Store](https://github.com/rails/activerecord-session_store).
+  * Configured to use JSON serialization.
+  * I'm not a huge fan that session_ids are stored plaintext in the database rather than hashed and is something I'm looking to change, but this library is super easy to adopt, and I still think it's a step up from a default `Session::CookieStore` approach where on-demand server-side session revocation is impossible (without rolling the secret key base). The point being: your application is going to need server-side sessions in some capacity and is worth exploring.
 * Uses [`__Host`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) cookies to ensure the session cookie cannot be clobbered through [cookie-tossing](https://github.blog/2013-04-09-yummy-cookies-across-domains/) style issues.
 
 ```ruby
